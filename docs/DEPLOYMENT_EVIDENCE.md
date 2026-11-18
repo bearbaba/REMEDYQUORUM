@@ -65,13 +65,23 @@ Network: GenLayer Studionet. Date: 18 November 2026. This document distinguishes
 - Independently recomputed SHA-256 of the **canonical frozen Case #2 claim**: `eb84170fdd5d8febe7c58b7334ad0ec211b712f17daddadd896c4f7410d6baa9` — **exact match**.
 - Independently recomputed SHA-256 of the **canonical six-field ruling payload**: `62a91466aef08aaca304c4a754e51fe45cce0587f9f12c879ad3c17c7a6594d0` — **exact match**. Reproducible local fixture tests are provided in `tests/test_live_ruling_fixture.py`.
 - Source of view data: copied user-supplied Studio output. Hash verification validates the reported fields' internal consistency; this is **not yet an independently executed LATEST_FINAL RPC read** and is not external proof of the fictional contract's performance.
-- **Next:** deploy `RemedyVerify` from the unchanged repository source, passing `appeal_core_address="0x1f08cd694aC1bDd822F83e593f1ca719236FB5D2"` as constructor argument. Then capture the real RemedyVerify deployment address and inspect `get_core()` before making remediation claims.
+- **Next:** RemedyVerify has now been deployed with the correct constructor address; see the separate deployment receipt below. Its live `get_core()` view and cross-contract remediation call have not yet been documented.
+
+## RemedyVerify — finalized linked deployment (18 November 2026)
+
+- **Deployment TX:** [`0x221fd82b5fdc8982cc3babea7411190f9ba915be7db0e990ccfd797151512014`](https://explorer-studio.genlayer.com/tx/0x221fd82b5fdc8982cc3babea7411190f9ba915be7db0e990ccfd797151512014).
+- User-provided full Explorer deploy receipt: **FINALIZED / Accepted / GenVM SUCCESS**, deployment method, from Principal `0x4C7cb73aC8F8999af21cfc9fF4cF2333a9508Dcb`, nonce 558, value 0 GEN, initial validators 5.
+- **New deployed address:** `0x2138A278289A00Bae34c986B24b168800961B824`. [Import RemedyVerify in Studio](https://studio.genlayer.com/?import-contract=0x2138A278289A00Bae34c986B24b168800961B824).
+- Receipt contains the deployed `contract_code` (Python `RemedyVerify`) and constructor `calldata`. Decoding the Base64 calldata gives the expected constructor `appeal_core_address=0x1f08cd694aC1bDd822F83e593f1ca719236FB5D2` (same exact deployed AppealCore address from Case #2).
+- Contract implementation fixes `self.core` at deployment; `submit_remediation` and `assess_remediation` read `get_ruling(case_id)` from that stored source address and check the complete ruling hash, original participants, `UPHELD` verdict, and requested remedy.
+- **Evidence boundary:** this receipt proves an accepted deployment with the correct constructor argument. It does **not yet** constitute a separate live `get_core()` readback, successful cross-contract ruling read, accepted remediation, AI `VERIFIED`, or Claimant acknowledgment. Do not describe the workflow as completed until the subsequent receipts exist.
+- Demo case and potential evidence submissions are **synthetic**; file digests bind bytes, not external delivery or performance. Claimant's separate signature is required for any acceptance.
 
 ## Next live steps
 
 1. Optionally read `get_case(1)` at `LATEST_FINAL` and document its actual persisted verdict and three labels.
 2. Case #2's separately signed `adjudicate(2)` is **FINALIZED / Accepted / SUCCESS**, with return `UPHELD`. A user-provided `get_ruling(2)` output has matching recomputed claim/ruling hashes; independently read `get_case(2)` at `LATEST_FINAL` when available. The existing ruling readback is sufficient to begin the downstream source-address-bound deployment but does not replace independent RPC attestation.
-3. Deploy the existing `contracts/remedy_verify.py` with constructor `appeal_core_address="0x1f08cd694aC1bDd822F83e593f1ca719236FB5D2"`. Record the real deployment address; check its `get_core()` and `stats()` before submitting remediation. No RemedyVerify deployment or corrective-action evidence is claimed yet.
+3. **Deployed:** RemedyVerify at `0x2138A278289A00Bae34c986B24b168800961B824`, bound to the exact AppealCore address in its decoded constructor calldata. First read `get_core()` and `stats()` from RemedyVerify in Studio and confirm the live stored value. Then the bound Respondent may submit a synthetic remediation for **Case #2** with matching SHA-256 evidence bundle. No accepted remediation is claimed yet.
 4. Independently attest deployed source and state before submission.
 
 Local [CI](https://github.com/bearbaba/REMEDYQUORUM/actions) validates code with controlled GenLayer shims, not real remote consensus.
