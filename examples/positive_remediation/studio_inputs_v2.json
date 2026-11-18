@@ -1,0 +1,9 @@
+{
+  "case_id": 2,
+  "action_summary": "The revised digital report and indexed evidence archive for synthetic Case #2 are now published together in a public immutable GitHub commit. The corrected report contains six reproducible GenLayer transaction references matched to the archive. Both files can be fetched without a paywall or additional access fee. Original case and ruling are unchanged; this provides verifiable digital artifacts, not a claim of off-chain legal performance. Claimant acceptance remains separate.",
+  "evidence_json": "[{\"description\":\"Actual corrected report for synthetic Case #2 with six reproducible GenLayer transaction references S-01 through S-06, publicly downloadable from an immutable GitHub commit, at no access charge.\",\"kind\":\"artifact\",\"role\":\"corrected_report\",\"sha256\":\"34b5c2767143b3a69dd9db4b0460d4489cc24ca13db9bedbb62862bc5350b741\",\"url\":\"https://raw.githubusercontent.com/bearbaba/REMEDYQUORUM/675c2cc5c21bf0ec870155ce2e614bac6907914e/examples/positive_remediation/corrected_report.md\"},{\"description\":\"Actual indexed JSON source-evidence archive for Case #2, with six real Studionet Explorer transaction references and fixed ruling SHA-256; public immutable GitHub commit, no access charge.\",\"kind\":\"artifact\",\"role\":\"indexed_archive\",\"sha256\":\"da1960d26982394dbf08d8ac70ac3b3be1907e0cc9ac0791d8e8a8f9ef0cbca6\",\"url\":\"https://raw.githubusercontent.com/bearbaba/REMEDYQUORUM/675c2cc5c21bf0ec870155ce2e614bac6907914e/examples/positive_remediation/indexed_source_archive.json\"}]",
+  "evidence_sha256": "01846f7c006bfe89489d9e7e3625b81c83b5b6dd5a88d6af97b7e1e4ed3ffc87",
+  "appeal_core_address": "0x1f08cd694aC1bDd822F83e593f1ca719236FB5D2",
+  "positive_artifact_commit": "675c2cc5c21bf0ec870155ce2e614bac6907914e",
+  "note": "Use only with RemedyVerify V2; user must deploy it and confirm the on-chain address. Synthetic test; no external delivery asserted."
+}
