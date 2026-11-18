@@ -60,7 +60,12 @@ Network: GenLayer Studionet. Date: 18 November 2026. This document distinguishes
 - Actual return value: **`UPHELD`**. GenLayer Equivalence Principle output: `{"claim_support":"SUPPORTED","counterevidence":"DOES_NOT_REBUT","remedy_basis":"REQUIRED"}`.
 - The deterministic mapping of all three accepted labels now provides a **positive, actionable ruling on submitted synthetic facts**, in contrast with Case #1 `REVIEW`. GenLayer did not verify external contract execution, deliverables, or real-world legal liability.
 - **Do not repeat `adjudicate(2)`**; AppealCore allows exactly one adjudication per case.
-- Next read-only evidence: call `get_case(2)` to independently verify storage as `DECIDED` and `get_ruling(2)` to obtain the exact claimant/respondent, immutable claim hash, required remedy and `ruling_sha256`. The Explorer receipt is genuine evidence of accepted consensus, but these **view results have not yet been provided**.
+- **User-provided `get_ruling(2)` view result (read-only):** `contract=APPEALCORE`, `case_id=2`, `verdict=UPHELD`, `claimant=0x4c7cb73ac8f8999af21cfc9ff4cf2333a9508dcb`, `respondent=0xd6b8a3a5eb329410d9504784812b8569afa8c2af`, `claim_sha256=eb84170fdd5d8febe7c58b7334ad0ec211b712f17daddadd896c4f7410d6baa9`, `ruling_sha256=62a91466aef08aaca304c4a754e51fe45cce0587f9f12c879ad3c17c7a6594d0`.
+- **Frozen required remedy (exact):** "Supply the missing indexed evidence archive and a corrected report containing reproducible source references, as expressly required by clause 4.2, at no additional charge."
+- Independently recomputed SHA-256 of the **canonical frozen Case #2 claim**: `eb84170fdd5d8febe7c58b7334ad0ec211b712f17daddadd896c4f7410d6baa9` — **exact match**.
+- Independently recomputed SHA-256 of the **canonical six-field ruling payload**: `62a91466aef08aaca304c4a754e51fe45cce0587f9f12c879ad3c17c7a6594d0` — **exact match**. Reproducible local fixture tests are provided in `tests/test_live_ruling_fixture.py`.
+- Source of view data: copied user-supplied Studio output. Hash verification validates the reported fields' internal consistency; this is **not yet an independently executed LATEST_FINAL RPC read** and is not external proof of the fictional contract's performance.
+- **Next:** deploy `RemedyVerify` from the unchanged repository source, passing `appeal_core_address="0x1f08cd694aC1bDd822F83e593f1ca719236FB5D2"` as constructor argument. Then capture the real RemedyVerify deployment address and inspect `get_core()` before making remediation claims.
 
 ## Next live steps
 
