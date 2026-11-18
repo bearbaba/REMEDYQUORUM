@@ -17,7 +17,7 @@ Network: GenLayer Studionet. Date: 18 November 2026. This document distinguishes
 - Function: `open_case(respondent_address, claim_json)` from Claimant. Returned **Case ID = 1**.
 - Respondent address: `0xD6b8A3A5eB329410D9504784812b8569afA8C2aF`.
 - Frozen fictional claim states that a service provider delivered a report without mandatory supporting evidence; requested remedy is to provide supporting files and a corrected report with reproducible references. This is a **synthetic demonstration dispute**, not independent proof of delivery or contract breach.
-- This transaction proves the original claim was accepted and stored. The Respondent's separately signed response is documented below. No adjudication, UPHELD result or remediation has yet been established.
+- This transaction proves the original claim was accepted and stored. The separately signed response and accepted adjudication are documented below; the **REVIEW** decision is not an actionable UPHELD ruling.
 
 ## Case #1 — authentic Respondent-signed rebuttal
 
@@ -28,11 +28,20 @@ Network: GenLayer Studionet. Date: 18 November 2026. This document distinguishes
 - Submitted `response_evidence`: `The signed delivery receipt names a report attachment but contains no specific confirmation of evidence archive delivery.`
 - This establishes that distinct claimant and respondent wallets committed their respective synthetic narratives in the same on-chain case. It **does not** prove either narrative true, and **does not** imply an AI ruling.
 
-## Next live test
+## Case #1 — genuine GenLayer AI consensus: REVIEW (fail-closed)
 
-1. Have an original participant call `adjudicate(1)` from AppealCore using **Normal (Full Consensus)**. Record the actual return value, accepted execution, and Equivalence Principle outputs.
-2. Read `get_case(1)` at `LATEST_FINAL` and confirm state `DECIDED`, exact verdict and three labels.
-3. Only a real `UPHELD` ruling makes `get_ruling(1)` actionable; then deploy and bind RemedyVerify to the **exact** AppealCore address above. For any other outcome, do not falsely claim actionable remediation.
-4. Eventually verify both deployed sources against GitHub and test authentic cross-contract remediation and Claimant acknowledgment.
+- **TX:** [`0xcde19030edac6f9dc9bf25b3246308b7d50cf336d9e4221c7138e3d7f9d48880`](https://explorer-studio.genlayer.com/tx/0xcde19030edac6f9dc9bf25b3246308b7d50cf336d9e4221c7138e3d7f9d48880).
+- User-provided Explorer receipt: **FINALIZED / Accepted / GenVM SUCCESS**; method `adjudicate(1)`; Respondent/Agent signer `0xD6b8A3A5eB329410D9504784812b8569afA8C2aF`; nonce 139, value 0 GEN.
+- Actual return value: **`REVIEW`**. GenLayer Equivalence Principle output: `{"claim_support":"SUPPORTED","counterevidence":"DOES_NOT_REBUT","remedy_basis":"REVIEW"}`.
+- Interpreting this narrowly: the assessment labels support the claim and find the rebuttal insufficient, but the requested remedy's factual basis remains inconclusive. Because `remedy_basis=REVIEW`, the contract's deterministic verdict mapping conservatively returns `REVIEW`, not `UPHELD`. No executable ruling can be obtained through `get_ruling(1)`.
+- **Do not rerun `adjudicate(1)`**. Case #1 has already undergone its one on-chain review. Its synthetic inputs do not independently prove any real-world breach, delivery or obligation.
+- A `LATEST_FINAL` `get_case(1)` readback has not yet been independently attached; the accepted transaction receipt proves the returned verdict and EP labels but is not a substitute for a separately checked storage snapshot.
+
+## Next live steps
+
+1. Optionally read `get_case(1)` at `LATEST_FINAL` and document its actual persisted verdict and three labels.
+2. To test the full dispute-to-remediation path, open a **new** synthetic Case #2 with clearer evidence for the requested remedy, have the original Respondent file a separate response and run `adjudicate(2)` only once. Its outcome must be taken from actual accepted consensus, not predetermined.
+3. Only an accepted **`UPHELD`** ruling makes `get_ruling(case_id)` actionable. Deploy RemedyVerify with AppealCore's exact address and test its real cross-contract binding; otherwise, keep the remediation gate closed.
+4. Independently attest deployed source and state before submission.
 
 Local [CI](https://github.com/bearbaba/REMEDYQUORUM/actions) validates code with controlled GenLayer shims, not real remote consensus.
