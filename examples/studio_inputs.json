@@ -1,0 +1,24 @@
+{
+  "claim": {
+    "claim": "The service provider delivered the approved project report without the mandatory supporting evidence promised in the signed scope of work.",
+    "requested_remedy": "Provide the missing supporting evidence files and a corrected report with reproducible source references.",
+    "claim_evidence": "The original signed scope required source references, but the submitted deliverable has no attached evidence bundle."
+  },
+  "response": {
+    "response": "The project report was submitted on time, but we dispute that supporting files were required in the agreed version.",
+    "response_evidence": "The delivery confirmation mentions the report attachment only; we have no earlier evidence-bundle receipt."
+  },
+  "remedy_action": "We prepared a corrected report with stable source references and attached the previously omitted evidence bundle for the claimant to review.",
+  "remedy_evidence": [
+    {
+      "kind": "artifact",
+      "description": "A corrected report with the required source references stored in a signed, content-addressed archive.",
+      "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+    },
+    {
+      "kind": "receipt",
+      "description": "The internal delivery receipt records the new evidence bundle transfer to the claimant.",
+      "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+    }
+  ]
+}
