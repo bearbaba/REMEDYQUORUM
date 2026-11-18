@@ -1,6 +1,6 @@
 # REMEDYQUORUM — Studio deployment and evidence runbook
 
-**Target:** GenLayer Studionet. **Status:** NOT DEPLOYED. No real transaction outcome may be claimed before Studio verification.
+**Target:** GenLayer Studionet. **Live status (18 November 2026):** AppealCore and original RemedyVerify V1 are deployed and a real synthetic Case #2 completed its negative outcome `UPHELD → INSUFFICIENT → DISPUTED`. The **positive** `VERIFIED → ACCEPTED` path has **not** been shown. A new V2 source is prepared, **not yet deployed**; use [V2 runbook](REMEDYVERIFY_V2_RUNBOOK.md) for any new positive-path attempt. Instructions below are the original V1 reproduction workflow, not proof of future results.
 
 ## Contract A: AppealCore
 
