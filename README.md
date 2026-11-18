@@ -56,7 +56,7 @@ The following transactions are reported from actual **FINALIZED / Accepted / Gen
 
 See [complete linked on-chain execution evidence](docs/DEPLOYMENT_EVIDENCE.md), [synthetic evidence fixture](examples/demo_remediation/studio_submit_remediation.json), and [security/assurance model](docs/SECURITY_MODEL.md). Local Python CI is a separate contract-behavior shim, not live GenLayer consensus proof.
 
-## Positive verification path — RemedyVerify V2 (not yet deployed)
+## Positive verification path — V2 archived, V3 in preparation
 
 **Submission is on hold until an actual `VERIFIED → ACCEPTED` path is executed or the limitation is explicitly resolved.** The finalized V1 demo correctly ended in `UPHELD → INSUFFICIENT → DISPUTED`, not successful correction.
 
@@ -67,7 +67,7 @@ To address the V1 evidence gap without weakening its conservative AI judgment, a
 - [Exact V2 Studio input JSON](examples/positive_remediation/studio_inputs_v2.json), with immutable GitHub commit URL and actual SHA-256 digests.
 - [Step-by-step V2 deployment and positive-path runbook](docs/REMEDYVERIFY_V2_RUNBOOK.md).
 
-**V2 is deployed** on Studionet at [`0x5C6d327F57f8A49E9c64872c64d8C5D04Aca9C48`](https://studio.genlayer.com/?import-contract=0x5C6d327F57f8A49E9c64872c64d8C5D04Aca9C48). A real Respondent-signed [`submit_remediation(2, …)`](https://explorer-studio.genlayer.com/tx/0xc42bf412c23aa271e07035c754fe0488e1504e5019cd3eda11a1c518956ba08e) returned **new V2 Remediation ID 1** (FINALIZED / Accepted / GenVM SUCCESS). This establishes the linked submission, **not** successful web fetching, AI verification or claimant approval. `assess_remediation(1)` remains **pending**, and the positive-path demonstration is NOT yet complete. Only actual accepted `VERIFIED` and separate original-Claimant-signed `ACCEPTED` can establish it. Local tests are shims and not network consensus evidence. A public file is evidence of availability, not independent proof of real-world recipient delivery.
+**V2 is deployed** on Studionet at [`0x5C6d327F57f8A49E9c64872c64d8C5D04Aca9C48`](https://studio.genlayer.com/?import-contract=0x5C6d327F57f8A49E9c64872c64d8C5D04Aca9C48). A real Respondent-signed [`submit_remediation(2, …)`](https://explorer-studio.genlayer.com/tx/0xc42bf412c23aa271e07035c754fe0488e1504e5019cd3eda11a1c518956ba08e) returned **new V2 Remediation ID 1** (FINALIZED / Accepted / GenVM SUCCESS). This establishes the linked submission, **not** successful web fetching, AI verification or claimant approval. `assess_remediation(1)` later ran and returned **`INSUFFICIENT`** with all three criteria `REVIEW`, as shown in the on-chain incident report below. The positive-path demonstration is NOT yet complete. Only actual accepted `VERIFIED` and separate original-Claimant-signed `ACCEPTED` can establish it. Local tests are shims and not network consensus evidence. A public file is evidence of availability, not independent proof of real-world recipient delivery.
 
 ## V2 incident and V3 fix (pending network verification)
 
