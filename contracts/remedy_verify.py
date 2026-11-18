@@ -156,7 +156,13 @@ class RemedyVerify(gl.Contract):
             if all(proposed[k] == "PASS" for k in CRITERIA):
                 independently = parse_labels(judge())
                 return all(independently[k] == "PASS" for k in CRITERIA)
-            return True  # A conservative decision cannot be claimant-accepted as full completion.
+            # A negative verdict can unfairly reject a completed remedy, so
+            # require independent semantic confirmation of each FAIL dimension.
+            flagged = [k for k in CRITERIA if proposed[k] == "FAIL"]
+            if flagged:
+                independently = parse_labels(judge())
+                return all(independently[k] == "FAIL" for k in flagged)
+            return True  # REVIEW cannot be claimant-accepted as completion.
 
         labels = parse_labels(gl.vm.run_nondet_unsafe(judge, validate))
         verdict = ("FAILED" if "FAIL" in labels.values() else
