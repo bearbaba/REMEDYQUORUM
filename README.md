@@ -1,13 +1,13 @@
-# REMEDYQUORUM — Two-sided AI Disputes + Verified Corrective Action
+# REMEDYQUORUM — Unified AI Dispute-to-Remediation Accountability
 
-**One GenLayer Intelligent Contract contribution, containing two interoperable and independently reusable Intelligent Contracts.**
+**One unified GenLayer Intelligent Contract contribution:** a dispute-to-remediation lifecycle implemented by two linked on-chain modules, with a shared case identity, immutable ruling commitment, independent participants, and auditable outcomes. It is **one system, not two standalone project submissions**.
 
 | Deploy sequence | Contract | Purpose |
 |---|---|---|
 | First | `contracts/appeal_core.py` — **AppealCore** | Immutable claimant dossier, respondent rebuttal and one GenLayer AI assessment with substantive independent validator re-check |
 | Second | `contracts/remedy_verify.py` — **RemedyVerify** | Reads only an UPHELD AppealCore ruling, checks digest and signer binding, runs distinct GenLayer corrective-action consensus and requires claimant's separate acceptance |
 
-## Why these belong together
+## One unified dispute-to-remediation workflow
 
 AppealCore treats disputes as **adversarial, two-party evidence evaluation**, not arbitrary "AI decides X" classification. Claimant and respondent must be different wallets; an unopposed claim cannot become a default victory. Both submitted dossiers are frozen, hashed and evaluated against a custom equivalence validator. Outcomes are UPHELD / REJECTED / SPLIT / REVIEW. A decisive verdict requires validators to independently rerun the full 3-label assessment.
 
@@ -25,7 +25,34 @@ No token, legal enforcement, payout, automatic rollback or external data proof.
 6. Claimant separately signs `respond_to_remediation(remediation_id, accept, reason)` only after inspecting evidence and final receipt.
 7. Read `get_remediation(id)` and check `ruling_sha256`, verdict, LATEST_FINAL and confirmed claimant response. Test wrong signer, malicious evidence and incomplete work.
 
-**Network status (18 Nov 2026):** AppealCore (first contract) is deployed on GenLayer Studionet at [`0x1f08cd694aC1bDd822F83e593f1ca719236FB5D2`](https://studio.genlayer.com/?import-contract=0x1f08cd694aC1bDd822F83e593f1ca719236FB5D2). A real Claimant-signed [`open_case`](https://explorer-studio.genlayer.com/tx/0x3af6eb6cef490a79c4d1cfb010e1e6816f707c461298988f0b6fa695123506f5) returned **Case ID 1** (FINALIZED / Accepted / GenVM SUCCESS). The separately signed Respondent [`submit_response(1)`](https://explorer-studio.genlayer.com/tx/0x49e5330c7b76cd21e55e87adcfc99ca04ae504e5e265ccf4c269c168bfd277f1) returned **`BOTH_SIDES_LOCKED`** (FINALIZED / Accepted / GenVM SUCCESS). The separately signed and accepted [`adjudicate(1)`](https://explorer-studio.genlayer.com/tx/0xcde19030edac6f9dc9bf25b3246308b7d50cf336d9e4221c7138e3d7f9d48880) returned **`REVIEW`** with `claim_support=SUPPORTED`, `counterevidence=DOES_NOT_REBUT`, `remedy_basis=REVIEW`. This is a genuine **non-actionable**, conservative GenLayer consensus result; no `UPHELD` ruling is available from Case #1. A separate [Claimant-signed Case #2 submission](https://explorer-studio.genlayer.com/tx/0x98a6fdf19b227f6a72f0fd211c7900a9495589693160d48a109f1d9a8a7c64e6) is now FINALIZED / Accepted / GenVM SUCCESS, returning **Case ID 2**. The bound Respondent's separately signed [`submit_response(2)`](https://explorer-studio.genlayer.com/tx/0x748a8916a95b5c136b100353104acf75e63eef8d21dbcecbf0652abbd7ddb227) returned **`BOTH_SIDES_LOCKED`** (FINALIZED / Accepted / GenVM SUCCESS). Its genuine [`adjudicate(2)`](https://explorer-studio.genlayer.com/tx/0xc39ed18ca758922395b0f5d71d538cbc7118061cd873e52242ccec831e2d0d8d) has now FINALIZED / Accepted / GenVM SUCCESS, returning **`UPHELD`** with Equivalence Principle labels `claim_support=SUPPORTED`, `counterevidence=DOES_NOT_REBUT`, `remedy_basis=REQUIRED`. The user-provided `get_ruling(2)` output exposes the bound claim/ruling hashes, distinct signer addresses, and required remedy, and both hashes were recalculated from the canonical synthetic case data. Case #1's `REVIEW` versus Case #2's `UPHELD` demonstrates different actual accepted on-chain outcomes for distinct fictional dossiers. RemedyVerify was subsequently [deployed on Studionet](https://explorer-studio.genlayer.com/tx/0x221fd82b5fdc8982cc3babea7411190f9ba915be7db0e990ccfd797151512014) at [`0x2138A278289A00Bae34c986B24b168800961B824`](https://studio.genlayer.com/?import-contract=0x2138A278289A00Bae34c986B24b168800961B824), with **FINALIZED / Accepted / GenVM SUCCESS** and an inspected constructor calldata payload identifying AppealCore `0x1f08cd694aC1bDd822F83e593f1ca719236FB5D2`. A standalone `get_core()` live view is not yet documented, but a genuine Respondent-signed [`submit_remediation(2, ...)`](https://explorer-studio.genlayer.com/tx/0xff05637fb77dea5303fc6ee247b2d4741c5ce631d6d0a1bf0d834ffc13f72389) executed successfully (FINALIZED / Accepted / GenVM SUCCESS) and returned **Remediation ID 1**. This exercises RemedyVerify's stored AppealCore address, on-chain `get_ruling(2)` view, bound original Respondent, hashed ruling and [reproducible content-addressed synthetic evidence](examples/demo_remediation/studio_submit_remediation.json). The separately signed [`assess_remediation(1)`](https://explorer-studio.genlayer.com/tx/0xf1861eb91518341979c5204f1b26e47840f15fc1341216cc9417cd229cf44684) returned **`INSUFFICIENT`** (FINALIZED / Accepted / GenVM SUCCESS) with all three EP criteria in `REVIEW`, conservatively blocking recognition of the synthetic remedy. In the deployed code, REVIEW-only decisions can be accepted without independently rerunning the AI evaluation; do not misrepresent this as an all-PASS two-check validator result. No `VERIFIED` result or separate Claimant acceptance is established. The original Claimant may now dispute this assessed remediation with `respond_to_remediation(1, false, reason)`; it cannot be accepted as verified. See [Studionet execution evidence](docs/DEPLOYMENT_EVIDENCE.md). Unit tests are controlled local shims and are not live GenLayer consensus proof.
+## Verified Studionet demonstration — 18 November 2026
+
+The following transactions are reported from actual **FINALIZED / Accepted / GenVM SUCCESS** GenLayer Studio receipts, not local mock-test outputs. The dispute/evidence content itself is **synthetic** and does not establish legal obligations or off-chain delivery.
+
+**Unified deployment**
+
+| Module (part of the same system) | Studionet contract |
+|---|---|
+| AppealCore — independent two-party dispute adjudication | [`0x1f08cd694aC1bDd822F83e593f1ca719236FB5D2`](https://studio.genlayer.com/?import-contract=0x1f08cd694aC1bDd822F83e593f1ca719236FB5D2) |
+| RemedyVerify — ruling-bound corrective-action assessment and Claimant response | [`0x2138A278289A00Bae34c986B24b168800961B824`](https://studio.genlayer.com/?import-contract=0x2138A278289A00Bae34c986B24b168800961B824) |
+
+**One full on-chain workflow, Case #2**
+
+| Stage | On-chain outcome | Receipt |
+|---|---|---|
+| Claimant creates fictional dispute | Case ID **2** | [`open_case`](https://explorer-studio.genlayer.com/tx/0x98a6fdf19b227f6a72f0fd211c7900a9495589693160d48a109f1d9a8a7c64e6) |
+| Independent Respondent rebuts | `BOTH_SIDES_LOCKED` | [`submit_response`](https://explorer-studio.genlayer.com/tx/0x748a8916a95b5c136b100353104acf75e63eef8d21dbcecbf0652abbd7ddb227) |
+| GenLayer reviews the two-sided case | `UPHELD` | [`adjudicate`](https://explorer-studio.genlayer.com/tx/0xc39ed18ca758922395b0f5d71d538cbc7118061cd873e52242ccec831e2d0d8d) |
+| RemedyVerify deployment binds the AppealCore address | **FINALIZED / SUCCESS** | [`deploy`](https://explorer-studio.genlayer.com/tx/0x221fd82b5fdc8982cc3babea7411190f9ba915be7db0e990ccfd797151512014) |
+| Respondent submits SHA-256-bound synthetic remedy | Remediation ID **1** | [`submit_remediation`](https://explorer-studio.genlayer.com/tx/0xff05637fb77dea5303fc6ee247b2d4741c5ce631d6d0a1bf0d834ffc13f72389) |
+| GenLayer checks remedy sufficiency | `INSUFFICIENT` (three REVIEW labels) | [`assess_remediation`](https://explorer-studio.genlayer.com/tx/0xf1861eb91518341979c5204f1b26e47840f15fc1341216cc9417cd229cf44684) |
+| Original Claimant separately declines the insufficient remedy | **`DISPUTED`** | [`respond_to_remediation`](https://explorer-studio.genlayer.com/tx/0x2c89898ac324dac262e5554d08c56ea426739aa3a55bfc20f1d6b4a353fc87ce) |
+
+**Separate conservative consensus example:** Case #1 `adjudicate(1)` returned [`REVIEW`](https://explorer-studio.genlayer.com/tx/0xcde19030edac6f9dc9bf25b3246308b7d50cf336d9e4221c7138e3d7f9d48880) and cannot yield an actionable UPHELD ruling.
+
+**Security boundaries:** A `REVIEW`-only RemedyVerify consensus result is permitted by the deployed validator without independently re-running the semantic prompt; stronger all-PASS/FAIL claims use distinct independent validator checks. `INSUFFICIENT` forbids Claimant acceptance as a verified completion, even though a Claimant may register `DISPUTED`. This demonstration **does not** prove positive `VERIFIED` → `ACCEPTED`, external delivery, or legal enforcement.
+
+See [complete linked on-chain execution evidence](docs/DEPLOYMENT_EVIDENCE.md), [synthetic evidence fixture](examples/demo_remediation/studio_submit_remediation.json), and [security/assurance model](docs/SECURITY_MODEL.md). Local Python CI is a separate contract-behavior shim, not live GenLayer consensus proof.
 
 ## Test locally
 
