@@ -1,0 +1,56 @@
+{
+  "schema": "remedyquorum.indexed_evidence.v1",
+  "case_id": 2,
+  "scope_clause": "4.2",
+  "ruling_sha256": "62a91466aef08aaca304c4a754e51fe45cce0587f9f12c879ad3c17c7a6594d0",
+  "deliverable": "Indexed source-evidence archive for the corrected synthetic Case #2 report",
+  "entries": [
+    {
+      "id": "S-01",
+      "label": "Claimant-signed Case #2 claim",
+      "kind": "genlayer_studionet_tx",
+      "reference": "https://explorer-studio.genlayer.com/tx/0x98a6fdf19b227f6a72f0fd211c7900a9495589693160d48a109f1d9a8a7c64e6",
+      "transaction_hash": "0x98a6fdf19b227f6a72f0fd211c7900a9495589693160d48a109f1d9a8a7c64e6"
+    },
+    {
+      "id": "S-02",
+      "label": "Respondent-signed Case #2 response",
+      "kind": "genlayer_studionet_tx",
+      "reference": "https://explorer-studio.genlayer.com/tx/0x748a8916a95b5c136b100353104acf75e63eef8d21dbcecbf0652abbd7ddb227",
+      "transaction_hash": "0x748a8916a95b5c136b100353104acf75e63eef8d21dbcecbf0652abbd7ddb227"
+    },
+    {
+      "id": "S-03",
+      "label": "Accepted Case #2 UPHELD consensus",
+      "kind": "genlayer_studionet_tx",
+      "reference": "https://explorer-studio.genlayer.com/tx/0xc39ed18ca758922395b0f5d71d538cbc7118061cd873e52242ccec831e2d0d8d",
+      "transaction_hash": "0xc39ed18ca758922395b0f5d71d538cbc7118061cd873e52242ccec831e2d0d8d"
+    },
+    {
+      "id": "S-04",
+      "label": "Deployed RemedyVerify bound to AppealCore",
+      "kind": "genlayer_studionet_tx",
+      "reference": "https://explorer-studio.genlayer.com/tx/0x221fd82b5fdc8982cc3babea7411190f9ba915be7db0e990ccfd797151512014",
+      "transaction_hash": "0x221fd82b5fdc8982cc3babea7411190f9ba915be7db0e990ccfd797151512014"
+    },
+    {
+      "id": "S-05",
+      "label": "Original remediation deemed INSUFFICIENT",
+      "kind": "genlayer_studionet_tx",
+      "reference": "https://explorer-studio.genlayer.com/tx/0xf1861eb91518341979c5204f1b26e47840f15fc1341216cc9417cd229cf44684",
+      "transaction_hash": "0xf1861eb91518341979c5204f1b26e47840f15fc1341216cc9417cd229cf44684"
+    },
+    {
+      "id": "S-06",
+      "label": "Original Claimant refused prior remedy DISPUTED",
+      "kind": "genlayer_studionet_tx",
+      "reference": "https://explorer-studio.genlayer.com/tx/0x2c89898ac324dac262e5554d08c56ea426739aa3a55bfc20f1d6b4a353fc87ce",
+      "transaction_hash": "0x2c89898ac324dac262e5554d08c56ea426739aa3a55bfc20f1d6b4a353fc87ce"
+    }
+  ],
+  "access": "Public GitHub repository, no paywall",
+  "additional_charge_usdc": 0,
+  "additional_charge_gen": 0,
+  "external_customer_delivery_proven": false,
+  "note": "All sources are real demo on-chain receipts, but the dispute is synthetic; neither actual legal obligation nor third-party customer delivery is claimed."
+}
