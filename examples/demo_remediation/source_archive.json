@@ -1,0 +1,11 @@
+{
+  "case_id": 2,
+  "demo_only": true,
+  "description": "Synthetic indexed source-evidence archive for clause 4.2 training fixture",
+  "entries": [
+    {"id": "demo-source-001", "kind": "synthetic_log", "description": "Illustrative project support item A; not an independently verified record"},
+    {"id": "demo-source-002", "kind": "synthetic_log", "description": "Illustrative project support item B; not an independently verified record"}
+  ],
+  "additional_charge": 0,
+  "delivery_status": "fixture_published_only; claimant receipt not established"
+}
