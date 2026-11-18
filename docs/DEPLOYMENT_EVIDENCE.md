@@ -43,12 +43,20 @@ Network: GenLayer Studionet. Date: 18 November 2026. This document distinguishes
 - User-provided Explorer receipt: **FINALIZED / Accepted / GenVM SUCCESS**, Claimant/Principal `0x4C7cb73aC8F8999af21cfc9fF4cF2333a9508Dcb` signed `open_case`, nonce 557, value 0 GEN, returned **Case ID = 2**.
 - Respondent bound to `0xD6b8A3A5eB329410D9504784812b8569afA8C2aF`, distinct from the Claimant.
 - Fictional claim: synthetic project clause 4.2 requires both a final report and indexed source-evidence archive; fictional delivery manifest names only `final_report.pdf`. Requested remedy is an indexed archive and corrected report with reproducible references, at no additional charge.
-- The receipt verifies **the submission**, not the truth of the fictional clause or missing archive. **No Respondent signature or adjudication for Case #2 is yet evidenced.** No outcome, especially `UPHELD`, can be presumed.
+- The receipt verifies **the submission**, not the truth of the fictional clause or missing archive. The distinct Respondent's successful signed response is documented immediately below; no AI adjudication for Case #2 has yet occurred.
+
+## Case #2 — authentic Respondent-signed response
+
+- **TX:** [`0x748a8916a95b5c136b100353104acf75e63eef8d21dbcecbf0652abbd7ddb227`](https://explorer-studio.genlayer.com/tx/0x748a8916a95b5c136b100353104acf75e63eef8d21dbcecbf0652abbd7ddb227).
+- User-provided GenLayer Explorer receipt: **FINALIZED / Accepted / GenVM SUCCESS**. Respondent/Agent wallet `0xD6b8A3A5eB329410D9504784812b8569afA8C2aF`, nonce 140, value 0 GEN, method `submit_response(2, response_json)`, returned **`BOTH_SIDES_LOCKED`**.
+- Filed fictional response: "We acknowledge that the fictional delivery manifest lists only the final report and does not record the indexed evidence archive. We believed the archive could be supplied separately, but it has not yet been delivered."
+- Filed fictional response evidence: "The fictional delivery manifest lists final_report.pdf without an accompanying archive entry. Clause 4.2 requires both the final report and the indexed source-evidence archive for complete delivery."
+- **Status:** both independent parties have signed their statements, now locked for an adjudication. This does not establish the real-world truth of the synthetic facts, nor an `UPHELD` or any other verdict. `adjudicate(2)` must be assessed by real GenLayer consensus **once**.
 
 ## Next live steps
 
 1. Optionally read `get_case(1)` at `LATEST_FINAL` and document its actual persisted verdict and three labels.
-2. Case #2 is now open. The bound Respondent must separately sign `submit_response(2, response_json)` (expected `BOTH_SIDES_LOCKED`), after which either original party may call `adjudicate(2)` **once**. Record the actual accepted consensus outcome rather than presuming `UPHELD`.
+2. Case #2 has a finalized Claimant claim and a separate finalized Respondent rebuttal, returning `BOTH_SIDES_LOCKED`. An original party may now call `adjudicate(2)` **once**, using Normal/Full Consensus. Record its actual FINALIZED/Accepted/SUCCESS status, Equivalence Principle fields and verdict rather than presuming `UPHELD`.
 3. Only an accepted **`UPHELD`** ruling makes `get_ruling(case_id)` actionable. Deploy RemedyVerify with AppealCore's exact address and test its real cross-contract binding; otherwise, keep the remediation gate closed.
 4. Independently attest deployed source and state before submission.
 
