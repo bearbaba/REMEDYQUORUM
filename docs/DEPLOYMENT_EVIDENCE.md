@@ -37,10 +37,18 @@ Network: GenLayer Studionet. Date: 18 November 2026. This document distinguishes
 - **Do not rerun `adjudicate(1)`**. Case #1 has already undergone its one on-chain review. Its synthetic inputs do not independently prove any real-world breach, delivery or obligation.
 - A `LATEST_FINAL` `get_case(1)` readback has not yet been independently attached; the accepted transaction receipt proves the returned verdict and EP labels but is not a substitute for a separately checked storage snapshot.
 
+## Case #2 — authentic Claimant-signed submission (18 November 2026)
+
+- **TX:** [`0x98a6fdf19b227f6a72f0fd211c7900a9495589693160d48a109f1d9a8a7c64e6`](https://explorer-studio.genlayer.com/tx/0x98a6fdf19b227f6a72f0fd211c7900a9495589693160d48a109f1d9a8a7c64e6).
+- User-provided Explorer receipt: **FINALIZED / Accepted / GenVM SUCCESS**, Claimant/Principal `0x4C7cb73aC8F8999af21cfc9fF4cF2333a9508Dcb` signed `open_case`, nonce 557, value 0 GEN, returned **Case ID = 2**.
+- Respondent bound to `0xD6b8A3A5eB329410D9504784812b8569afA8C2aF`, distinct from the Claimant.
+- Fictional claim: synthetic project clause 4.2 requires both a final report and indexed source-evidence archive; fictional delivery manifest names only `final_report.pdf`. Requested remedy is an indexed archive and corrected report with reproducible references, at no additional charge.
+- The receipt verifies **the submission**, not the truth of the fictional clause or missing archive. **No Respondent signature or adjudication for Case #2 is yet evidenced.** No outcome, especially `UPHELD`, can be presumed.
+
 ## Next live steps
 
 1. Optionally read `get_case(1)` at `LATEST_FINAL` and document its actual persisted verdict and three labels.
-2. To test the full dispute-to-remediation path, open a **new** synthetic Case #2 with clearer evidence for the requested remedy, have the original Respondent file a separate response and run `adjudicate(2)` only once. Its outcome must be taken from actual accepted consensus, not predetermined.
+2. Case #2 is now open. The bound Respondent must separately sign `submit_response(2, response_json)` (expected `BOTH_SIDES_LOCKED`), after which either original party may call `adjudicate(2)` **once**. Record the actual accepted consensus outcome rather than presuming `UPHELD`.
 3. Only an accepted **`UPHELD`** ruling makes `get_ruling(case_id)` actionable. Deploy RemedyVerify with AppealCore's exact address and test its real cross-contract binding; otherwise, keep the remediation gate closed.
 4. Independently attest deployed source and state before submission.
 
