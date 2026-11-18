@@ -3,7 +3,7 @@
 ## Goal and status
 
 - **Goal:** demonstrate a real GenLayer Studionet flow ending in `VERIFIED` and a separate original-Claimant-signed `ACCEPTED`, not merely `UPHELD / INSUFFICIENT / DISPUTED`.
-- **Current status:** SOURCE AND OFFLINE TESTS ONLY. This V2 contract has **not yet been deployed** and no V2 on-chain success is claimed.
+- **Current status (18 November 2026):** V2 is deployed at `0x5C6d327F57f8A49E9c64872c64d8C5D04Aca9C48`; finalized Respondent-signed `submit_remediation(2, …)` [TX](https://explorer-studio.genlayer.com/tx/0xc42bf412c23aa271e07035c754fe0488e1504e5019cd3eda11a1c518956ba08e) returned new V2 **Remediation ID 1**. V2 `assess_remediation(1)` and Claimant `ACCEPTED` remain pending. The archived V1 negative result is unchanged.
 - **Single system:** V2 replaces the RemedyVerify module **within REMEDYQUORUM**. AppealCore at `0x1f08cd694aC1bDd822F83e593f1ca719236FB5D2` and the accepted synthetic Case #2 `UPHELD` ruling remain unchanged. V1 state, including Remediation #1 DISPUTED, is preserved as historical evidence.
 
 ## Why V1 could not substantiate completion
