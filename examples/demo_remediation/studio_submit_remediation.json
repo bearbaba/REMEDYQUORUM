@@ -1,0 +1,6 @@
+{
+  "case_id": 2,
+  "action_summary": "For the synthetic Case #2 demo, we prepared a corrected report containing reproducible source references and an indexed evidence archive, both published as repository fixtures at no additional charge. This is a self-reported simulation; separate claimant receipt and external delivery have not been established.",
+  "evidence_json": "[{\"description\":\"A corrected demonstration report with reproducible demo-source-001 and demo-source-002 references, stored in examples/demo_remediation/corrected_report.md. This is not proof of external delivery.\",\"kind\":\"artifact\",\"sha256\":\"e609fd0b96ea65c21781db4f93817c72691e89642519f99c5e3d679a60a396e4\"},{\"description\":\"An indexed demonstration evidence archive for clause 4.2 with two fictional source records, stored in examples/demo_remediation/source_archive.json. Claimant delivery is not independently verified.\",\"kind\":\"artifact\",\"sha256\":\"1cbe9e5cda4fc30209f85c0312b9e719ca6b15310cdace635894fe295a4e7bee\"}]",
+  "evidence_sha256": "e4cc82d7c0418b16ef1c4561764772e3e6296bcbd792b93f5fe90a0a5ce9ee66"
+}
