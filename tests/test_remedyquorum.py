@@ -144,4 +144,39 @@ class Tests(unittest.TestCase):
         self.answers=[{k:"PASS" for k in b.CRITERIA},{k:"REVIEW" for k in b.CRITERIA}]
         with self.assertRaises(RuntimeError):self.b.assess_remediation(rid)
         self.assertEqual(json.loads(self.b.get_remediation(rid))["status"],"SUBMITTED")
+    def test_unconfirmed_adverse_ai_fail_does_not_commit(self):
+        self.upheld();actor(RESPONDENT);p=proof()
+        rid=self.b.submit_remediation(self.id,"We provided the complete corrected report and supporting evidence archive.",canon(p),b.sha(canon(p)))
+        failure={"remedy_match":"FAIL","evidence_completeness":"PASS","remaining_violations":"PASS"}
+        success={k:"PASS" for k in b.CRITERIA}
+        self.answers=[failure,success]
+        with self.assertRaisesRegex(RuntimeError,"validator disagreement"):
+            self.b.assess_remediation(rid)
+        self.assertEqual(json.loads(self.b.get_remediation(rid))["status"],"SUBMITTED")
+    def test_confirmed_negative_ai_can_record_failed(self):
+        self.upheld();actor(RESPONDENT);p=proof()
+        rid=self.b.submit_remediation(self.id,"An incomplete report was returned and the supporting evidence has not been delivered.",canon(p),b.sha(canon(p)))
+        failure={"remedy_match":"FAIL","evidence_completeness":"PASS","remaining_violations":"PASS"}
+        self.answers=[failure,failure]
+        self.assertEqual(self.b.assess_remediation(rid),"FAILED")
+        actor(CLAIMANT)
+        with self.assertRaises(UserError):self.b.respond_to_remediation(rid,True,"We want to approve anyway.")
+    def test_split_case_is_not_an_actionable_ruling(self):
+        self.respond()
+        split={"claim_support":"SUPPORTED","counterevidence":"REBUTS","remedy_basis":"REQUIRED"}
+        self.answers=[split,split]
+        self.assertEqual(self.a.adjudicate(self.id),"SPLIT")
+        with self.assertRaises(UserError):self.a.get_ruling(self.id)
+    def test_wrong_parties_cannot_adjudicate_or_submit_remedy(self):
+        self.respond();actor(OUTSIDER)
+        with self.assertRaises(UserError):self.a.adjudicate(self.id)
+        actor(CLAIMANT);self.answers=[pass_case(),pass_case()]
+        self.a.adjudicate(self.id)
+        p=proof()
+        with self.assertRaises(UserError):self.b.submit_remediation(self.id,"A completed correction and all evidence references were submitted for review.",canon(p),b.sha(canon(p)))
+    def test_second_case_independent_from_first(self):
+        actor(CLAIMANT)
+        other=self.a.open_case(OUTSIDER,canon(CLAIM))
+        self.assertNotEqual(other,self.id)
+        self.assertEqual(json.loads(self.a.get_case(other))["status"],"OPEN")
 if __name__=="__main__": unittest.main()
