@@ -70,7 +70,7 @@ Network: GenLayer Studionet. Date: 18 November 2026. This document distinguishes
 ## Next live steps
 
 1. Optionally read `get_case(1)` at `LATEST_FINAL` and document its actual persisted verdict and three labels.
-2. Case #2's separately signed `adjudicate(2)` is **FINALIZED / Accepted / SUCCESS**, with return `UPHELD`. Read `get_case(2)` and `get_ruling(2)` at `LATEST_FINAL` before preparing the downstream demo.
+2. Case #2's separately signed `adjudicate(2)` is **FINALIZED / Accepted / SUCCESS**, with return `UPHELD`. A user-provided `get_ruling(2)` output has matching recomputed claim/ruling hashes; independently read `get_case(2)` at `LATEST_FINAL` when available. The existing ruling readback is sufficient to begin the downstream source-address-bound deployment but does not replace independent RPC attestation.
 3. Deploy the existing `contracts/remedy_verify.py` with constructor `appeal_core_address="0x1f08cd694aC1bDd822F83e593f1ca719236FB5D2"`. Record the real deployment address; check its `get_core()` and `stats()` before submitting remediation. No RemedyVerify deployment or corrective-action evidence is claimed yet.
 4. Independently attest deployed source and state before submission.
 
