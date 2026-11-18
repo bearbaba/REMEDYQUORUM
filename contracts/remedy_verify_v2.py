@@ -40,7 +40,7 @@ def parse_labels(raw):
 
 
 PINNED_RAW_GITHUB = re.compile(
-    r"https://raw\\.githubusercontent\\.com/[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+/"
+    r"https://raw\.githubusercontent\.com/[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+/"
     r"[a-f0-9]{40}/[A-Za-z0-9_./-]+"
 )
 REQUIRED_ROLES = ("corrected_report", "indexed_archive")
