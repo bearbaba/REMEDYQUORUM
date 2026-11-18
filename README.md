@@ -56,6 +56,19 @@ The following transactions are reported from actual **FINALIZED / Accepted / Gen
 
 See [complete linked on-chain execution evidence](docs/DEPLOYMENT_EVIDENCE.md), [synthetic evidence fixture](examples/demo_remediation/studio_submit_remediation.json), and [security/assurance model](docs/SECURITY_MODEL.md). Local Python CI is a separate contract-behavior shim, not live GenLayer consensus proof.
 
+## Positive verification path — RemedyVerify V2 (not yet deployed)
+
+**Submission is on hold until an actual `VERIFIED → ACCEPTED` path is executed or the limitation is explicitly resolved.** The finalized V1 demo correctly ended in `UPHELD → INSUFFICIENT → DISPUTED`, not successful correction.
+
+To address the V1 evidence gap without weakening its conservative AI judgment, a **new source-only V2 verifier** is prepared at [`contracts/remedy_verify_v2.py`](contracts/remedy_verify_v2.py). It independently fetches two publicly accessible, commit-pinned artifacts from GitHub, verifies their full-file SHA-256, cross-checks the indexed source IDs and frozen Case #2 ruling, and then asks GenLayer AI to evaluate the *actual retrieved content*. All-PASS requires independent validator re-fetch and semantic recheck. Original Claimant approval is still separate.
+
+- [Corrected Case #2 report](examples/positive_remediation/corrected_report.md) with six real Studionet transaction references.
+- [Indexed source-evidence archive](examples/positive_remediation/indexed_source_archive.json) with exact transaction hashes, direct URLs and zero additional access fees.
+- [Exact V2 Studio input JSON](examples/positive_remediation/studio_inputs_v2.json), with immutable GitHub commit URL and actual SHA-256 digests.
+- [Step-by-step V2 deployment and positive-path runbook](docs/REMEDYVERIFY_V2_RUNBOOK.md).
+
+**V2 is not deployed; its tests are local shims, not GenLayer success.** Only actual FINALIZED / Accepted / GenVM SUCCESS consensus and original-Claimant-signed `ACCEPTED` will establish the positive demonstration. A public file is evidence of availability, not independent proof of real-world recipient delivery.
+
 ## Test locally
 
 ```bash
