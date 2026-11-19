@@ -1,4 +1,4 @@
-"""Offline tests for RemedyVerify V3's pinned-public-artifact evidence gates.
+"""Offline tests for the deployed canonical RemedyVerify pinned-public-artifact evidence gates.
 
 The test stubs actual GenLayer web/consensus execution and does NOT count as
 a real Studionet VERIFIED or Claimant ACCEPTED receipt.
@@ -13,20 +13,19 @@ import test_remedyquorum as t
 ROOT = Path(__file__).resolve().parents[1]
 CORRECTED = ROOT / "examples" / "positive_remediation" / "corrected_report.md"
 ARCHIVE = ROOT / "examples" / "positive_remediation" / "indexed_source_archive.json"
-INPUTS = ROOT / "examples" / "positive_remediation" / "studio_inputs_v2.json"
+INPUTS = ROOT / "examples" / "positive_remediation" / "studio_inputs.json"
 CASE_FIXTURE = ROOT / "examples" / "case2_upheld_ruling.json"
 CLAIMANT = "0x4c7cb73ac8f8999af21cfc9ff4cf2333a9508dcb"
 RESPONDENT = "0xd6b8a3a5eb329410d9504784812b8569afa8c2af"
 CORE = "0x1f08cd694ac1bdd822f83e593f1ca719236fb5d2"
-v3 = t.load("remedy_verify_v3", "contracts/remedy_verify_v3.py")
-v2 = t.load("remedy_verify_v2", "contracts/remedy_verify_v2.py")
+active = t.load("remedy_verify", "contracts/remedy_verify.py")
 
 class FakeWebResponse:
     def __init__(self, content):
         self.status = 200
         self.body = content
 
-class RemedyV3Tests(unittest.TestCase):
+class RemedyVerifyTests(unittest.TestCase):
     def setUp(self):
         self.inputs = json.loads(INPUTS.read_text(encoding="utf-8"))
         self.report = CORRECTED.read_bytes()
@@ -44,11 +43,11 @@ class RemedyV3Tests(unittest.TestCase):
         self.a.submit_response(self.case_id, t.canon(t.RESPONSE))
         t.gl.nondet.exec_prompt = lambda prompt, response_format=None: (
             t.canon(t.pass_case()) if "claim_support" in prompt else
-            t.canon({k: "PASS" for k in v3.CRITERIA})
+            t.canon({k: "PASS" for k in active.CRITERIA})
         )
         self.assertEqual(self.a.adjudicate(self.case_id), "UPHELD")
         t.gl.get_contract_at = lambda address: t.Linked(self.a)
-        self.b = v3.RemedyVerifyV3(CORE)
+        self.b = active.RemedyVerifyV3(CORE)
         self.b.remediations = t.TreeMap()
         class Web:
             def __init__(webself):
@@ -75,19 +74,6 @@ class RemedyV3Tests(unittest.TestCase):
         response = FakeWebResponse(self.report)
         self.assertEqual(response.status, 200)
         self.assertFalse(hasattr(response, "status_code"))
-
-    def test_prior_v2_bug_is_reproduced_with_real_response_shape(self):
-        # V2 silently turns AttributeError for nonexistent status_code into REVIEW.
-        broken = v2.RemedyVerifyV2(CORE)
-        broken.remediations = t.TreeMap()
-        original = self.b
-        self.b = broken
-        try:
-            rid = self.submit()
-            self.assertEqual(self.b.assess_remediation(rid), "INSUFFICIENT")
-            self.assertEqual(len(self.web.urls_called), 1)
-        finally:
-            self.b = original
 
     def test_real_fixture_digest_and_pinned_urls(self):
         self.assertEqual(
