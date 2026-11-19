@@ -34,6 +34,8 @@ The earlier unsuccessful corrective-action trials have been retired and are **no
 
 The underlying clause 4.2 agreement and delivery dispute are synthetic. Public documents and matching hashes prove content availability/integrity in this demo, **not** external delivery, legal enforcement or off-chain customer consent.
 
+**Final persisted result:** [Case #2 Remediation #1 — `ASSESSED / VERIFIED / ACCEPTED`](examples/positive_remediation/final_accepted_state.json), with an accompanying [offline consistency test](tests/test_final_accepted_state.py). These preserve user-supplied Studio output; they do not establish external legal performance.
+
 ## Quality and verification
 
 Run locally:
