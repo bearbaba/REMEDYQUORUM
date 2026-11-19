@@ -9,7 +9,7 @@ REMEDYQUORUM uses two linked Intelligent Contracts to resolve a two-sided synthe
 | **AppealCore** | [`0x1f08cd694aC1bDd822F83e593f1ca719236FB5D2`](https://studio.genlayer.com/?import-contract=0x1f08cd694aC1bDd822F83e593f1ca719236FB5D2) | [`contracts/appeal_core.py`](contracts/appeal_core.py) |
 | **RemedyVerify** | [`0x8c65c73187bBf575201d31a1270812e1D4BeD830`](https://studio.genlayer.com/?import-contract=0x8c65c73187bBf575201d31a1270812e1D4BeD830) | [`contracts/remedy_verify.py`](contracts/remedy_verify.py) |
 
-**Important status (19 November 2026):** The new RemedyVerify deployment is shown as **Deployed** in the user's GenLayer Studio screenshot, with a deployment transaction marked **FINALIZED**. Its full deployment receipt, current `get_core()` and `stats()` output have not yet been attached; no corrective-action submission or AI result has been reported for this current address. **Do not claim `VERIFIED` or `ACCEPTED` yet.**
+**Important status (19 November 2026):** The active RemedyVerify deployment is shown as **Deployed** in the user's GenLayer Studio screenshot. A real [FINALIZED / Accepted / GenVM SUCCESS `submit_remediation(2, …)` transaction](https://explorer-studio.genlayer.com/tx/0x67f1879a9b3ddbb68b37953dcf5accfe7c20889844bb5b9b03919ea1f044e413) signed by the original Respondent returned **Remediation ID 1** on the active address. Its full deployment receipt, current read-only `get_core()` / `stats()` / `get_remediation(1)` output and AI assessment have not yet been supplied. **Do not claim `VERIFIED` or `ACCEPTED` yet.**
 
 ## How the single system works
 
