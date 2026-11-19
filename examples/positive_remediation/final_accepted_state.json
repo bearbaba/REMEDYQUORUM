@@ -1,0 +1,28 @@
+{
+  "provenance": "User-supplied successful read-only get_remediation(1) Studio response after FINALIZED original-Claimant-signed ACCEPTED transaction. Selected fields normalized from pasted text, not independent RPC attestation.",
+  "source_contract_instance": "0x8c65c73187bbf575201d31a1270812e1d4bed830",
+  "original_appeal_core": "0x1f08cd694ac1bdd822f83e593f1ca719236fb5d2",
+  "case_id": 2,
+  "id": 1,
+  "status": "ASSESSED",
+  "verdict": "VERIFIED",
+  "labels": {
+    "evidence_completeness": "PASS",
+    "remaining_violations": "PASS",
+    "remedy_match": "PASS"
+  },
+  "claimant": "0x4c7cb73ac8f8999af21cfc9ff4cf2333a9508dcb",
+  "respondent": "0xd6b8a3a5eb329410d9504784812b8569afa8c2af",
+  "claimant_response": "ACCEPTED",
+  "claimant_reason": "I reviewed the corrected public report and indexed source archive, confirmed the linked digital demonstration deliverables, and accept the synthetic Case #2 correction.",
+  "claim_sha256": "eb84170fdd5d8febe7c58b7334ad0ec211b712f17daddadd896c4f7410d6baa9",
+  "ruling_sha256": "62a91466aef08aaca304c4a754e51fe45cce0587f9f12c879ad3c17c7a6594d0",
+  "evidence_sha256": "01846f7c006bfe89489d9e7e3625b81c83b5b6dd5a88d6af97b7e1e4ed3ffc87",
+  "source_urls_comment": "User's pasted final view autoformatted URLs as Markdown; earlier pre-assessment view had the original plain HTTPS URLs, stored in studio_inputs.json.",
+  "transaction_hashes": {
+    "upstream_upheld": "0xc39ed18ca758922395b0f5d71d538cbc7118061cd873e52242ccec831e2d0d8d",
+    "remediation_submitted": "0x67f1879a9b3ddbb68b37953dcf5accfe7c20889844bb5b9b03919ea1f044e413",
+    "remediation_verified": "0xeb833645059564627bd042ba47b79d11ce63aff339b6b06f858f151549e5ede3",
+    "claimant_accepted": "0x34301026aa6fcd4eda70785afb7e499e6fb9cffdef19fd80e578f5d69c44afae"
+  }
+}

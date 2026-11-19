@@ -9,7 +9,7 @@ REMEDYQUORUM uses two linked Intelligent Contracts to resolve a two-sided synthe
 | **AppealCore** | [`0x1f08cd694aC1bDd822F83e593f1ca719236FB5D2`](https://studio.genlayer.com/?import-contract=0x1f08cd694aC1bDd822F83e593f1ca719236FB5D2) | [`contracts/appeal_core.py`](contracts/appeal_core.py) |
 | **RemedyVerify** | [`0x8c65c73187bBf575201d31a1270812e1D4BeD830`](https://studio.genlayer.com/?import-contract=0x8c65c73187bBf575201d31a1270812e1D4BeD830) | [`contracts/remedy_verify.py`](contracts/remedy_verify.py) |
 
-**Important status (19 November 2026):** The active RemedyVerify deployment is shown as **Deployed** in the user's GenLayer Studio screenshot. A real [FINALIZED / Accepted / GenVM SUCCESS `submit_remediation(2, …)` transaction](https://explorer-studio.genlayer.com/tx/0x67f1879a9b3ddbb68b37953dcf5accfe7c20889844bb5b9b03919ea1f044e413) signed by the original Respondent returned **Remediation ID 1** on the active address. Its full deployment receipt and separate `get_core()` / `stats()` views have not yet been supplied. The user-provided read-only `get_remediation(1)` now confirms `SUBMITTED`, `claimant_response=NONE`, the frozen AppealCore ruling and both plain commit-pinned URLs with SHA-256 digests. AI `assess_remediation(1)` remains pending. **Do not claim `VERIFIED` or `ACCEPTED` yet.**
+**Important status (19 November 2026):** The active RemedyVerify deployment is shown as **Deployed** in the user's GenLayer Studio screenshot. A real [FINALIZED / Accepted / GenVM SUCCESS `submit_remediation(2, …)` transaction](https://explorer-studio.genlayer.com/tx/0x67f1879a9b3ddbb68b37953dcf5accfe7c20889844bb5b9b03919ea1f044e413) signed by the original Respondent returned **Remediation ID 1** on the active address. Its full deployment receipt and separate `get_core()` / `stats()` views have not yet been supplied. The user-provided read-only `get_remediation(1)` now confirms `SUBMITTED`, `claimant_response=NONE`, the frozen AppealCore ruling and both plain commit-pinned URLs with SHA-256 digests. The original Respondent separately called [**`assess_remediation(1)`**](https://explorer-studio.genlayer.com/tx/0xeb833645059564627bd042ba47b79d11ce63aff339b6b06f858f151549e5ede3) on the current RemedyVerify; the transaction is FINALIZED / Accepted / GenVM SUCCESS and returned **`VERIFIED`** with `remedy_match=PASS`, `evidence_completeness=PASS` and `remaining_violations=PASS`. The original Claimant then separately signed [`respond_to_remediation(1, true, reason)`](https://explorer-studio.genlayer.com/tx/0x34301026aa6fcd4eda70785afb7e499e6fb9cffdef19fd80e578f5d69c44afae), **FINALIZED / Accepted / GenVM SUCCESS** with on-chain return **`ACCEPTED`**. The subsequent user-supplied `get_remediation(1)` view confirmed final stored `status=ASSESSED`, `verdict=VERIFIED`, `claimant_response=ACCEPTED`, three PASS labels, and unchanged ruling/evidence SHA-256 commitments. This does not establish real-world delivery or legal performance.
 
 ## How the single system works
 
@@ -34,6 +34,8 @@ The earlier unsuccessful corrective-action trials have been retired and are **no
 
 The underlying clause 4.2 agreement and delivery dispute are synthetic. Public documents and matching hashes prove content availability/integrity in this demo, **not** external delivery, legal enforcement or off-chain customer consent.
 
+**Final persisted result:** [Case #2 Remediation #1 — `ASSESSED / VERIFIED / ACCEPTED`](examples/positive_remediation/final_accepted_state.json), with an accompanying [offline consistency test](tests/test_final_accepted_state.py). These preserve user-supplied Studio output; they do not establish external legal performance.
+
 ## Quality and verification
 
 Run locally:
@@ -45,6 +47,6 @@ python -m py_compile contracts/*.py
 
 The tests use local GenLayer shims and are **not** an actual Studionet consensus receipt. Full state and security boundaries are in [security model](docs/SECURITY_MODEL.md) and [audit receipts](docs/DEPLOYMENT_EVIDENCE.md).
 
-**Contribution status:** One unified Intelligent Contracts submission, **on hold until the real active RemedyVerify yields an auditable positive `VERIFIED → ACCEPTED` flow** or the remaining limitation is resolved.
+**Contribution status:** One unified Intelligent Contracts project; **positive `UPHELD → VERIFIED → ACCEPTED` synthetic-case workflow achieved on Studionet** and confirmed by user-supplied final state readback. A separate `get_core()`/`stats()` readback, full deployment transaction receipt and independent code-identity attestation remain optional additional assurance before steward submission. No external legal-performance or customer-delivery claim is made.
 
 *Repository file naming is canonical: one AppealCore, one RemedyVerify. A legacy internal class/metadata identifier retained inside the byte-identical deployed verifier source is not a product version or an invitation to deploy another module. Changing that identifier on-chain would require a separate signed deployment or upgrade.*
