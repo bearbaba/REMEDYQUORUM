@@ -11,7 +11,7 @@
 
 **Current verifier source:** [`contracts/remedy_verify.py`](../contracts/remedy_verify.py) — byte-for-byte copied from the source file shown by the user as deployed. Repository uses a single canonical filename. Internal code metadata from that immutable deployed artifact is intentionally unchanged: cosmetic renaming would no longer match its source. **The full new deploy transaction hash, separate `stats()`/`get_core()` readbacks, and independent chain bytecode/source attestation have not yet been furnished.**
 
-**Current live positive-path status:** a real finalized `submit_remediation` for Case #2 **has** now been supplied (see below), but no subsequent `assess_remediation`, `VERIFIED` or Claimant `ACCEPTED` transaction has been supplied. Do not reuse remediation IDs from retired contract addresses.
+**Current live positive-path status:** The current verifier has a real FINALIZED/Accepted/GenVM SUCCESS `assess_remediation(1)` returning **`VERIFIED`** with all three Equivalence Principle criteria **`PASS`** (receipt documented below). Original Claimant `ACCEPTED` is still pending, as is a final stored-state readback. Do not reuse IDs from retired contracts.
 
 ## Active RemedyVerify — real accepted remediation submission (19 November 2026)
 
@@ -24,6 +24,15 @@
 - **Readback completed:** user-provided successful `get_remediation(1)` view of the **current deployed address** confirms stored `status=SUBMITTED`, `claimant_response=NONE`, empty `verdict` and labels, Case #2, original Claimant/Respondent, the exact AppealCore source and frozen claim/ruling digests, two plain `https://raw.githubusercontent.com/...` immutable commit-pinned URLs, both actual file SHA-256 values, and the matching canonical bundle SHA-256. This is a user-supplied Studio view, not independently authenticated RPC; it verifies the reported persisted input values rather than the URLs' external content. **Next write is one `assess_remediation(1)`** in Normal/Full Consensus; its outcome remains unknown.
 - This is one active REMEDYQUORUM project and its synthetic digital dispute; no external legal performance is claimed.
 
+## Active RemedyVerify — FINALIZED AI consensus: VERIFIED
+
+- **Transaction:** [accepted GenLayer Explorer TX](https://explorer-studio.genlayer.com/tx/0xeb833645059564627bd042ba47b79d11ce63aff339b6b06f858f151549e5ede3).
+- **User-provided receipt:** 19 November 2026, FINALIZED / Accepted / GenVM SUCCESS; original Respondent Agent `0xD6b8A3A5eB329410D9504784812b8569afA8C2aF` signed `assess_remediation(1)` to the sole current RemedyVerify `0x8c65c73187bBf575201d31a1270812e1D4BeD830`; nonce 147, 0 GEN, Normal execution, 5 initial validators.
+- Actual return value: **`VERIFIED`**.
+- Equivalence Principle output: `{"evidence_completeness":"PASS","remaining_violations":"PASS","remedy_match":"PASS"}`.
+- In the maintained source, all-PASS classifications trigger the validator's independent semantic and downloaded-byte re-evaluation. The accepted receipt establishes the reported result; per-validator internal traces were not separately provided.
+- Scope: verdict applies to a synthetic Case #2 and two actual public content-addressed digital artifacts, not independently attested third-party delivery or legal compliance.
+- **Pending:** Only the original Claimant may independently review the report and indexed archive, then call `respond_to_remediation(1, true, reason)`. Do not claim `ACCEPTED` until that transaction finalizes. Afterwards read `get_remediation(1)` to verify the stored verdict and claimant response.
 ## Reusable upstream proof — original AppealCore
 
 | Stage | Result | Original signer | Real Explorer receipt |
@@ -65,6 +74,6 @@ Canonical submission bundle SHA-256 `01846f7c006bfe89489d9e7e3625b81c83b5b6dd5a8
 
 ## Release gate
 
-Keep the contribution **unsubmitted** until (a) read-only `get_core()/stats()` confirm the current deployed verifier's source link, (b) **completed**: accepted `submit_remediation(2)` returned Remediation ID 1 at the current address, (c) an actually accepted `assess_remediation` returns `VERIFIED` with all three PASS labels, (d) the original Claimant independently signs `ACCEPTED`, and (e) final read-only state agrees. Do not invent times, hashes or success outcomes. This is a **synthetic digital dispute**, not external legal or delivery attestation.
+Keep the contribution **unsubmitted** until (a) read-only `get_core()/stats()` confirm the current deployed verifier's source link, (b) **completed**: accepted `submit_remediation(2)` returned Remediation ID 1 at the current address, (c) **completed:** an accepted `assess_remediation(1)` returned `VERIFIED` with all three PASS labels, (d) the original Claimant independently signs `ACCEPTED`, and (e) final read-only state agrees. Do not invent times, hashes or success outcomes. This is a **synthetic digital dispute**, not external legal or delivery attestation.
 
 Local Python CI validates code under controlled shims, not live GenLayer consensus.
