@@ -1,57 +1,31 @@
-# REMEDYQUORUM — Studio deployment and evidence runbook
+# REMEDYQUORUM — current GenLayer Studio runbook
 
-**Target:** GenLayer Studionet. **Live status (18 November 2026):** AppealCore and original RemedyVerify V1 are deployed and a real synthetic Case #2 completed its negative outcome `UPHELD → INSUFFICIENT → DISPUTED`. The **positive** `VERIFIED → ACCEPTED` path has **not** been shown. A new V2 source is prepared, **not yet deployed**; use [V2 runbook](REMEDYVERIFY_V2_RUNBOOK.md) for any new positive-path attempt. Instructions below are the original V1 reproduction workflow, not proof of future results.
+**One active system, no release-series naming and no redeploy of historical errors.**
 
-## Contract A: AppealCore
-
-1. Open [GenLayer Studio](https://studio.genlayer.com/) and paste `contracts/appeal_core.py`. Deploy **AppealCore** without constructor parameters.
-2. Record actual **address A** and the finalized deployment receipt. Check `stats()` for `name=APPEALCORE`, `version=1.0.0`.
-3. From **Claimant wallet**, call `open_case(respondent_address, claim_json)` with a distinct **Respondent** wallet and editable claim:
-```json
-{"claim":"The service provider delivered the report without the agreed supporting evidence records in the signed written project scope.","requested_remedy":"Supply the missing verifiable evidence archive and a corrected report that contains reproducible source references.","claim_evidence":"The signed scope explicitly required original supporting records but the delivered file contained no evidence archive."}
-```
-4. Switch to **Respondent wallet**. Call `submit_response(case_id, response_json)`:
-```json
-{"response":"We contest the scope interpretation because the completed report was delivered and the source archive was intended as a separate deliverable.","response_evidence":"The signed delivery receipt names a report attachment but contains no specific confirmation of evidence archive delivery."}
-```
-5. Both claimant and respondent dossiers must exist before `adjudicate(case_id)`. Any party may initiate that method. Use Explorer to verify whether the validator consensus was *Accepted*, *Undetermined*, or *CANCELED*; do not equate a leader's UI answer with a finalized decision.
-6. Read `get_case(case_id)` on `LATEST_FINAL`. Only an actual `UPHELD` result makes `get_ruling(case_id)` callable. A `REVIEW`, `REJECTED` or `SPLIT` case **must not** become an actionable ruling.
-
-## Contract B: RemedyVerify
-
-7. Paste `contracts/remedy_verify.py` into Studio. Set required constructor argument `appeal_core_address` to the **real deployed address A**. Deploy B. Check B `get_core()` and `stats()` match A.
-8. From original **Respondent**, call `submit_remediation(case_id, action_summary, evidence_json, evidence_sha256)`. The required action summary refers to the exact remedial obligation returned by A; the evidence bundle consists of 1–8 objects of `kind`, `description` and an evidence `sha256`.
-9. Save the evidence array as `evidence.json`; run `python scripts/hash_inputs.py evidence.json` to compute the canonical `evidence_sha256` argument. Use actual digests for the retained evidence sources. Evidence descriptions and digests alone do not prove external delivery.
-10. Call `assess_remediation(remediation_id)`. Its independent AI criteria are remedy_match, evidence_completeness and remaining_violations, each PASS/FAIL/REVIEW. An all-PASS classification still awaits a separate claimant action.
-11. From **Claimant**, call `respond_to_remediation(remediation_id, true, "I have reviewed and accepted the correction.")` **only if** result is `VERIFIED`. Use `false` and a substantive reason to dispute any assessed remedy. The original case ruling at A is not rewritten.
-
-## Mandatory adversarial evidence
-
-| Scenario | Outcome |
+| Module | Studionet |
 |---|---|
-| Both parties provided their frozen case facts, decisive AI validator agreement | `UPHELD`, `REJECTED` or `SPLIT` depending on evidence (verify actual result) |
-| Claimant alone attempts adjudication before response | Rejected; no default claimant victory |
-| Model output ambiguous, missing fields, or injected keys | `REVIEW`; no actionable ruling |
-| B attempts to verify an unapproved or non-UPHELD case | Rejected by A's view or B's source checks |
-| B uses modified source ruling hash or wrong claimant address | Rejected; binding mismatch |
-| Respondent supplies partial or insufficient proof | `INSUFFICIENT` / `FAILED` only after accepted consensus |
-| Claimant tries to accept an unverified remediation | Rejected |
-| Decisive label disagreement among validators | No accepted on-chain verdict; possible `UNDETERMINED` |
+| AppealCore | `0x1f08cd694aC1bDd822F83e593f1ca719236FB5D2` |
+| RemedyVerify | `0x8c65c73187bBf575201d31a1270812e1D4BeD830` |
 
-## Collect authentic proof
+Current verifier source: [`contracts/remedy_verify.py`](../contracts/remedy_verify.py). This is the unchanged source text from the latest deployment screenshot, copied to the canonical filename. The internal class/metadata identifiers reflect the deployed code; they are not additional supported product versions.
 
-- A/B deployment and exact contract addresses
-- Successful two-role claim and response receipts, plus accepted adjudication
-- B read of A's actual ruling, accepted remediation consensus and separate Claimant response
-- At least one negative-path proof, explicit outcome and no fabricated hashes
-- Tests, declared limitations, deployed-source identity and `LATEST_FINAL` readback
+## Preflight — read-only (no gas-consuming write)
 
-## Submission draft (only AFTER actual verification)
+1. Open the [active RemedyVerify Studio contract](https://studio.genlayer.com/?import-contract=0x8c65c73187bBf575201d31a1270812e1D4BeD830). Confirm the panel displays that exact **Deployed at** address, not a previously deployed instance.
+2. Call `get_core()`. It must equal the AppealCore address in the table above (case-insensitive).
+3. Call `stats()`. Confirm `appeal_core` matches, `evidence_mode=PINNED_PUBLIC_WEB_CONTENT_SHA256` and note the number of existing `remediations`; do not guess the next remediation ID.
+4. Preserve the full deployment TX hash if obtainable, and compare the deployed Python code/source identity with this repository before attributing it to the contract.
 
-**Title:** REMEDYQUORUM — Two-Sided AI Adjudication + Cross-Contract Remediation Verification
+## Write sequence — only after readback succeeds
 
-**Notes:** AppealCore requires independently signed claimant and respondent evidence before GenLayer validators can adjudicate a frozen case; decisive UPHELD/REJECTED/SPLIT labels require substantive independent consensus. Only an UPHELD ruling exposes a hashed actionable obligation. RemedyVerify is deployed with the real AppealCore address and verifies the live ruling, claimant/respondent identities, immutable evidence bundle and corrective-action consistency through its own AI consensus. The claimant must separately accept a verified remedy. The pair forms a reusable fail-closed dispute-to-remediation primitive; it does not enforce law, payments or external evidence truth.
+1. Use original **Respondent** wallet `0xD6b8A3A5eB329410D9504784812b8569afA8C2aF`, Normal (Full Consensus), Simulation Mode off.
+2. Open `submit_remediation` and copy **exactly** four input fields from [`examples/positive_remediation/studio_inputs.json`](../examples/positive_remediation/studio_inputs.json). Pass `case_id=2` and the exact strings `action_summary`, `evidence_json` and `evidence_sha256`.
+3. Record the actual FINALIZED / Accepted / GenVM SUCCESS transaction and returned remediation ID. If this call fails, do not infer an ID.
+4. Before the one-shot AI write, call `get_remediation(actual_id)` and confirm both real HTTPS artifact URLs, hashes, roles, frozen `UPHELD` ruling and `status=SUBMITTED`.
+5. Invoke `assess_remediation(actual_id)` **once**. This performs public web retrieval of the two immutable files and semantic validation. Inspect actual Return Value and Equivalence Principle outputs. If `INSUFFICIENT`, `FAILED`, `REVIEW`, or a rejected/failed transaction, stop and diagnose — **do not run it again** for an already assessed remediation.
+6. **Only for an actually accepted `VERIFIED` verdict with all PASS criteria**, switch to original **Claimant** wallet `0x4C7cb73aC8F8999af21cfc9fF4cF2333a9508Dcb`, manually review the published report and archive, and call `respond_to_remediation(actual_id, true, reason)` with an accurate statement of what the claimant checked.
+7. Read `get_remediation(actual_id)` again and require `verdict=VERIFIED` with `claimant_response=ACCEPTED` before describing the positive demonstration as complete.
 
-**Evidence URL:** https://github.com/bearbaba/REMEDYQUORUM
+## Limits
 
-**Submission:** one `Intelligent Contracts` slot for this paired suite.
+The underlying project agreement is fictional. A content-addressed file and public URL do not independently prove legal performance or receipt by any real person. The Claimant's signature is a separate consent action, not a substitute for verifying off-chain facts. Historical failed trials are in [the audit ledger](DEPLOYMENT_EVIDENCE.md), not in the active deployment instructions.
